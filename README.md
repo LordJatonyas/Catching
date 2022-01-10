@@ -6,5 +6,5 @@ The Player uses WASD keys to control movement while the Catcher uses the arrow k
 
 To run the game, you need to have access to the MATLAB GUI. Open this repo on it and run:
 '''
->> catching
+catching
 '''
