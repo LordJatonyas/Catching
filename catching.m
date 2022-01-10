@@ -2,16 +2,21 @@
 % Exercise 7: Mini Project
 % A MATLAB 2 Player Catching Game
 
+% Clean up before game begins
 clear all
 close all
 clc
 
+% Initialise key states for Player and Catcher
 pressedKey1 = 0;
 pressedKey2 = 0;
+
+% Obtain figure dimensions
 screensize = get(groot,'Screensize');
 dimen = [(screensize(3) - screensize(4))/2 0 screensize(4) screensize(4)];
 maxSize = 30;
 
+% Initialise game variables
 playerPos = [-(maxSize/2 - 5); 0];
 playerMove = [0 0];
 catcherPos = [maxSize/2 - 5; 0];
@@ -57,7 +62,7 @@ set(gcf,'color','cyan');
 
 set(gcf,'KeyPressFcn',@stroke)
 
-% Game Stops when Enemy catches the Player
+% Game Stops when Catcher catches the Player
 while ~checkcollision(playerPos(1,1),playerPos(2,1),catcherPos(1,1),catcherPos(2,1))
     
     % Game Stops when Player exits the Game Area
@@ -67,7 +72,7 @@ while ~checkcollision(playerPos(1,1),playerPos(2,1),catcherPos(1,1),catcherPos(2
     
     pressedKey1 = get(gcf,'CurrentKey');
     switch pressedKey1
-        % player controls
+        % Player controls
         case 'w'
             playerMove(1) = 0;
             if playerMove(2) == -speed
@@ -100,14 +105,14 @@ while ~checkcollision(playerPos(1,1),playerPos(2,1),catcherPos(1,1),catcherPos(2
             end
             playerMove(1) = -speed;
             playerPos = translate(playerPos,playerMove(1),playerMove(2));
-        % keep player inertia if another key is pressed
+        % keep Player inertia if another key is pressed
         otherwise
             playerPos = translate(playerPos,playerMove(1),playerMove(2));
     end
     
     pressedKey2 = get(gcf,'CurrentKey');
     switch pressedKey2
-        % enemy controls
+        % Catcher controls
         case 'uparrow'
             catcherMove(1) = 0;
             if catcherMove(2) == -speed
@@ -140,12 +145,12 @@ while ~checkcollision(playerPos(1,1),playerPos(2,1),catcherPos(1,1),catcherPos(2
             end
             catcherMove(1) = -speed;
             catcherPos = translate(catcherPos,catcherMove(1),catcherMove(2));
-        % keep enemy inertia if another key is pressed
+        % keep Catcher inertia if another key is pressed
         otherwise
             catcherPos = translate(catcherPos,catcherMove(1),catcherMove(2));
     end
     
-    % Updating player score
+    % Updating Player score
     if [playerPos(1,1) playerPos(2,1)] == [foodX1 foodY1]
         [foodX1 foodY1] = foodSpawn(maxSize);
         score = score + 1;
@@ -224,6 +229,7 @@ xlim([-maxSize/2 maxSize/2]);
 ylim([-maxSize/2 maxSize/2]);
 hold on
 
+% Show Player score after game ends
 msgbox(strcat('Score:  ',num2str(score)));
 hold on
 
